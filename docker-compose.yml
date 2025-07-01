@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:17
+    container_name: my-postgres1
+    restart: always
+    environment:
+      POSTGRES_USER: ege
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: egedb
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+
+volumes:
+  pgdata:

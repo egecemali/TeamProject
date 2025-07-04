@@ -66,5 +66,6 @@ public class PlayerController {
         return ResponseEntity.ok(playerService.getStadiumByPlayerId(playerId));
     }
 
+
 }
 

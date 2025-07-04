@@ -34,7 +34,7 @@ public class Player {
     @Column(name = "nationality")
     private String nationality;
     @Column(name = "market_value")
-    private int marketValue;
+    private float marketValue;
     private Region region;
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
     @JoinColumn(name = "teamId")
@@ -42,5 +42,10 @@ public class Player {
     private Team team;
     @OneToMany(mappedBy = "player",fetch = FetchType.LAZY)
     private List<PlayerInfo> playerInfos;
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "managerId")
+    private Manager manager;
+
+
 
 }

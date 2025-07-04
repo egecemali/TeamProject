@@ -20,27 +20,27 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.teams.project.core.utilities.rabbit.RabbitMQConfig.QUEUE_NAME;
-import static com.teams.project.core.utilities.rabbit.RabbitMQConfig.ROUTING_KEY;
+//import static com.teams.project.core.utilities.rabbit.RabbitMQConfig.QUEUE_NAME;
+//import static com.teams.project.core.utilities.rabbit.RabbitMQConfig.ROUTING_KEY;
 
 @Service
 @AllArgsConstructor
 public class PlayerService {
     private final TeamDao teamDao;
-    private final Exchange exchange;
+    //private final Exchange exchange;
     private final TeamBusinessRules teamBusinessRules;
     private PlayerDao playerDao;
     private ModelMapperService modelMapperService;
     private PlayerBusinessRules playerBusinessRules;
-    private AmqpTemplate rabbitTemplate;
+    //private AmqpTemplate rabbitTemplate;
 
 
-    public void addPlayer(PlayerRequestDto playerRequestDto) {
-        rabbitTemplate.convertAndSend(exchange.getName(),ROUTING_KEY,playerRequestDto);
-    }
+    //public void addPlayer(PlayerRequestDto playerRequestDto) {
+        //rabbitTemplate.convertAndSend(exchange.getName(),ROUTING_KEY,playerRequestDto);
+    //}
     @Transactional
-    @RabbitListener(queues = QUEUE_NAME)
-    public void addPlayerMassage(PlayerRequestDto playerRequestDto) {
+    //@RabbitListener(queues = QUEUE_NAME)
+    public void addPlayer(PlayerRequestDto playerRequestDto) {
         playerBusinessRules.checkIfPlayerNameNullOrEmpty(playerRequestDto.getPlayerName());
         playerBusinessRules.checkIfTeamIdExists(playerRequestDto.getTeamId());
         Player player = modelMapperService.getModelMapperForRequestDto().map(playerRequestDto, Player.class);
@@ -97,5 +97,7 @@ public class PlayerService {
         playerBusinessRules.checkIfPlayerIdExists(playerId);
        return playerDao.findStadiumNameByPlayerId(playerId);
     }
+
+
 }
 

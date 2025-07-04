@@ -3,6 +3,7 @@ package com.teams.project.core.utilities.exceptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.View;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -34,7 +37,7 @@ public class GlobalExceptionHandler {
         problemDetails.setTimeStamp(System.currentTimeMillis());
         return problemDetails;
     }
-    @ExceptionHandler(MethodArgumentNotValidException.class)
+    /*@ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     public ProblemDetails handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
         //log.error(exception.getMessage());
@@ -46,7 +49,7 @@ public class GlobalExceptionHandler {
         problemDetails.setStatus(HttpStatus.BAD_REQUEST.value());
 
         return problemDetails;
-    }
+    }*/
     @ExceptionHandler(AlreadyExistException.class)
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
 
@@ -56,6 +59,12 @@ public class GlobalExceptionHandler {
         problemDetails.setStatus(HttpStatus.BAD_REQUEST.value());
         problemDetails.setTimeStamp(System.currentTimeMillis());
         return problemDetails;
+    }
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String,String>> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
+        Map<String, String> errors = new HashMap<>();
+        exception.getBindingResult().getFieldErrors().forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
+        return ResponseEntity.badRequest().body(errors);
     }
 
 }

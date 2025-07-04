@@ -14,7 +14,7 @@ public class PlayerUpdateDto {
     private String playerSurname;
     private int age;
     private String nationality;
-    private int marketValue;
+    private float marketValue;
     private int teamId;
     private Region region;
 

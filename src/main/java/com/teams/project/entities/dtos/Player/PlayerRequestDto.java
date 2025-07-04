@@ -12,21 +12,21 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 
 public class PlayerRequestDto {
+    @NotNull(message = "Player name cannot be null!")
+
     private String playerName;
     @NotNull(message = "Player surname cannot be null!")
-    @NotBlank
     private String playerSurname;
     @NotNull(message = "Player age cannot be null!")
     private Integer age;
     @NotNull(message = "Player nationality cannot be null ")
     private String nationality;
-    private int marketValue;
+    private float marketValue;
     @NotNull(message = "Player region cannot be null ")
     private Region region;
-
-
     @NotNull(message = "Player team cannot be null.")
     private Integer teamId;
+    private Long managerId;
 
 
 }

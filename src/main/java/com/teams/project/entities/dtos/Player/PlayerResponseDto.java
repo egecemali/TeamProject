@@ -17,7 +17,9 @@ public class PlayerResponseDto {
     private String playerSurname;
     private int age;
     private String nationality;
-    private int marketValue;
+    private float marketValue;
     private String team;
+    private String managerName;
+    private String firm_name;
 
 }
